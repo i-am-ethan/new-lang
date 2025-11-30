@@ -8,5 +8,5 @@
 ## 実行方法
 
 ```bash
-go run .
+make run
 ```
