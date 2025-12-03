@@ -5,32 +5,32 @@ import (
 	"unicode"
 )
 
-type Lexer struct {
-	input    string
-	position int
-	prevCh   rune // 前の文字
-	ch       rune // 現在の文字
+type Token struct {
+	Value rune
+	Type string
 }
 
-func NewLexer(input string) *Lexer {
-	return &Lexer{
-		input: input,
-		position: 0,
-		prevCh:   0,
-		ch:       0,
+// 次のトークンに進む
+// 返し値: 次のトークンがあればtrue、なければfalse
+func Tokenize(content string) []Token {
+	fmt.Printf("call advance\n")
+	fmt.Printf("content: %s\n", content)
+
+	var tokens []Token
+	for _, v := range content {
+		// tokenを生成する
+		t := token(v)
+		// tokensにtokenをappendする
+		tokens = append(tokens, t)
 	}
+
+	fmt.Printf("tokens: %+v\n", tokens)
+	return tokens
 }
 
-func (l *Lexer) Process() {
-	for i, ch := range l.input {
-		switch {
-		case unicode.IsDigit(ch):
-			fmt.Printf("position: %d, %c is digit\n", i, ch)
-		case ch == '+':
-			fmt.Printf("position: %d, %c is plus\n", i, ch)
-		default:
-			fmt.Printf("position: %d, %c is other\n", i, ch)
-		}
+func token(r rune) Token {
+	if unicode.IsDigit(r) {
+		return Token{Value: r, Type: "digit"}
 	}
+	return Token{Value: r, Type: "other"}
 }
-

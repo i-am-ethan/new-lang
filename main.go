@@ -27,9 +27,7 @@ func main() {
 
 	// ファイルとじる
 	defer file.Close()
-
-	// lexerを呼び出す
-	// lexer.Lexer(string(content))
-	lexer := lexer.NewLexer(string(content))
-	lexer.Process()
+	
+	// lexerにpanのcontentを渡す
+	lexer.Tokenize(string(content))
 }
